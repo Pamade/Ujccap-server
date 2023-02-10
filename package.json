@@ -16,9 +16,6 @@
     "validator": "^13.7.0"
   },
   "main": "index.js",
-  "engines": {
-    "node": "18.x"
-  },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
     "eslint-config-node": "^4.1.0",
