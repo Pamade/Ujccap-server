@@ -1,4 +1,4 @@
-const bcrypt = require("bcrypt");
+// const bcrypt = require("bcrypt");
 const { User } = require("../models/user");
 const sendEmail = require("../utils/sendEmail");
 const { isEmail } = require("validator");
@@ -119,8 +119,8 @@ const login = async (req, res, next) => {
       return res.status(400).json({ err: "You have to login via google" });
     }
 
-    const decryptedPassword = await bcrypt.compare(password, user.password);
-
+    const decryptedPassword = false;
+    // await bcrypt.compare(password, user.password);
     if (!decryptedPassword)
       return res.status(401).json({ err: INVALID_CREDENTIALS });
 
@@ -254,8 +254,8 @@ const changePassword = async (req, res) => {
     const { password, repeatPassword, newPassword } = req.body;
     const { id } = req.user;
     const user = await User.findById(id);
-
-    const isPasswordCorrect = await bcrypt.compare(password, user.password);
+    // await bcrypt.compare(password, user.password);
+    const isPasswordCorrect = false;
     if (!isPasswordCorrect) {
       return res.status(401).json({ err: "Incorrect password" });
     } else if (isPasswordCorrect && password === repeatPassword) {
@@ -280,7 +280,8 @@ const changeEmail = async (req, res) => {
     const { id } = req.user;
     const user = await User.findById(id);
     const { newEmail, password } = req.body;
-    const isPasswordCorrect = await bcrypt.compare(password, user.password);
+    // await bcrypt.compare(password, user.password);
+    const isPasswordCorrect = false;
     if (!isPasswordCorrect) {
       return res.status(401).json({ err: "Incorrect password" });
     }
