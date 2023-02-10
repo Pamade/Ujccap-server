@@ -1,6 +1,6 @@
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
-// const bcrypt = require("bcrypt");
+const bcrypt = require("bcrypt");
 const Token = require("../models/token");
 const multer = require("multer");
 
@@ -27,9 +27,9 @@ const createVerificationToken = (_id) => {
 };
 
 const hashPassword = async (password) => {
-  // const salt = await bcrypt.genSalt();
-  // const hashedPassword = await bcrypt.hash(password, salt);
-  return "25125215125";
+  const salt = await bcrypt.genSalt();
+  const hashedPassword = await bcrypt.hash(password, salt);
+  return hashedPassword;
 };
 
 const passwordValidate = (password, repeatPassword) => {
