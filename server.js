@@ -12,7 +12,7 @@ const favourites = require("./routes/favourites");
 const opinions = require("./routes/opinions");
 const anyUser = require("./routes/anyUser");
 const port = process.env.PORT || 5001;
-const BASE_API = "/api/v1/";
+const BASE_API = "https://ujccap-server-production.up.railway.app/api/v1/";
 
 app.use(express.json());
 app.use(express.static(__dirname));
