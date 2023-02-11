@@ -23,8 +23,14 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 // app.use(express.static(__dirname));
-app.use("/public/offers", express.static("/public/offers"));
-app.use("/public/avatars", express.static("/public/avatars"));
+app.use(
+  "/public/offers",
+  express.static(path.join(__dirname, "/public/offers"))
+);
+app.use(
+  "/public/avatars",
+  express.static(path.join(__dirname, "/public/avatars"))
+);
 
 app.use(`${BASE_API}auth`, userRouter);
 app.use(`${BASE_API}offersNoAuth`, offersNoAuth);
