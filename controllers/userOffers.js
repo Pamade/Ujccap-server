@@ -84,7 +84,7 @@ const fetchOffer = async (req, res) => {
   }
 };
 
-const addOffer = async (req, res, next) => {
+const addOffer = async (req, res) => {
   try {
     let mainImageURL = "";
     const mainImage = req.files["main-image-offer"]

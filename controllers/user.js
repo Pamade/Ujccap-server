@@ -217,9 +217,7 @@ const forgotPasswordVerify = async (req, res) => {
     });
 
     if (!user) return res.status(404).json({ err: INVALID_LINK });
-    console.log(user);
     const token = await findOldToken(user._id, req.params.token);
-    console.log(token);
     if (!token) return res.status(404).json({ err: INVALID_LINK });
     res.status(200).json({ data: token });
   } catch (err) {
