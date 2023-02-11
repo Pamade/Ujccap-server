@@ -13,6 +13,7 @@ const opinions = require("./routes/opinions");
 const anyUser = require("./routes/anyUser");
 const port = process.env.PORT || 5001;
 const BASE_API = "/api/v1/";
+const path = require("path");
 const cors = require("cors");
 
 const corsOptions = {
