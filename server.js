@@ -16,7 +16,7 @@ const BASE_API = "/api/v1/";
 const cors = require("cors");
 
 const corsOptions = {
-  origin: "https://ujccap-client-mg4y3kilp-pamade.vercel.app",
+  origin: "*",
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
