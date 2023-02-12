@@ -6,9 +6,11 @@ const { fetch, limit, currentDate } = require("../utils/fetchOffer");
 const sharp = require("sharp");
 const unique = new Date().getTime();
 const fs = require("fs");
-const imageResize = async (buffer, path) => {
-  const directory = "/public/offers";
-  console.log(buffer, path);
+const path = require("path");
+
+const imageResize = async (buffer, pathName) => {
+  const directory = path.join(__dirname, "/public/offers", pathName);
+  console.log(buffer, path, directory);
   if (!fs.existsSync(directory)) {
     fs.mkdirSync(directory, { recursive: true });
   }
@@ -17,7 +19,7 @@ const imageResize = async (buffer, path) => {
       fit: sharp.fit.cover,
       width: 900,
     })
-    .toFile(directory + path);
+    .toFile(directory);
 };
 
 const fetchOffersProfile = async (req, res) => {
