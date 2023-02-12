@@ -5,14 +5,19 @@ const { INTERNAL_ERROR } = require("../utils/errors");
 const { fetch, limit, currentDate } = require("../utils/fetchOffer");
 const sharp = require("sharp");
 const unique = new Date().getTime();
-
+const fs = require("fs");
 const imageResize = async (buffer, path) => {
+  const directory = "./public/offers";
+
+  if (!fs.existsSync(directory)) {
+    fs.mkdirSync(directory, { recursive: true });
+  }
   await sharp(buffer)
     .resize({
       fit: sharp.fit.cover,
       width: 900,
     })
-    .toFile("./public/offers/" + path);
+    .toFile(directory + path);
 };
 
 const fetchOffersProfile = async (req, res) => {
