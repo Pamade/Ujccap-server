@@ -55,29 +55,29 @@ const fetchOfferAndSimillar = async (req, res) => {
       _id: offerId,
       expirationDate: { $gt: currentDate },
     }).populate("user");
-    console.log(userAuthId);
-    if (
-      typeof userAuthId !== "undefined" &&
-      mainOffer.user._id.toString() !== userAuthId
-    ) {
-      await User.findOneAndUpdate(
-        { _id: userAuthId, "recentlyWatched.id": ObjectId(offerId) },
-        { $pull: { recentlyWatched: { id: ObjectId(offerId) } } }
-      );
+    // console.log(userAuthId);
+    // if (
+    //   typeof userAuthId !== "undefined" &&
+    //   mainOffer.user._id.toString() !== userAuthId
+    // ) {
+    //   await User.findOneAndUpdate(
+    //     { _id: userAuthId, "recentlyWatched.id": ObjectId(offerId) },
+    //     { $pull: { recentlyWatched: { id: ObjectId(offerId) } } }
+    //   );
 
-      await User.findOneAndUpdate(
-        { _id: userAuthId },
-        {
-          $push: {
-            recentlyWatched: {
-              id: ObjectId(offerId),
-              watchedTime: cd,
-            },
-          },
-        },
-        { new: true }
-      );
-    }
+    //   await User.findOneAndUpdate(
+    //     { _id: userAuthId },
+    //     {
+    //       $push: {
+    //         recentlyWatched: {
+    //           id: ObjectId(offerId),
+    //           watchedTime: cd,
+    //         },
+    //       },
+    //     },
+    //     { new: true }
+    //   );
+    // }
 
     const user = await User.findById(mainOffer.user._id);
     const offersUser = await Offer.find({
