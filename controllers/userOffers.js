@@ -7,7 +7,7 @@ const sharp = require("sharp");
 const unique = new Date().getTime();
 const fs = require("fs");
 const imageResize = async (buffer, path) => {
-  const directory = "./public/offers";
+  const directory = "/public/offers";
 
   if (!fs.existsSync(directory)) {
     fs.mkdirSync(directory, { recursive: true });
