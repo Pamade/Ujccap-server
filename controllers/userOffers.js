@@ -9,7 +9,7 @@ const fs = require("fs");
 const path = require("path");
 
 const imageResize = async (buffer, name) => {
-  const directory = path.join("./public/offers", name);
+  const directory = path.join("./public/offers");
 
   if (!fs.existsSync(directory)) {
     fs.mkdirSync(directory, { recursive: true });
@@ -19,7 +19,7 @@ const imageResize = async (buffer, name) => {
       fit: sharp.fit.cover,
       width: 900,
     })
-    .toFile(directory);
+    .toFile(path.join(directory, name));
 };
 
 const fetchOffersProfile = async (req, res) => {
