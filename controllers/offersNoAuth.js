@@ -50,20 +50,23 @@ const fetchOfferAndSimillar = async (req, res) => {
   try {
     const limit = 3;
     const { offerId, userAuthId } = req.params;
-    console.log(offerId, userAuthId);
+
     const mainOffer = await Offer.findOne({
-      _id: ObjectId(offerId),
+      _id: offerId,
       expirationDate: { $gt: currentDate },
     }).populate("user");
-
-    if (userAuthId && mainOffer.user._id.toString() !== userAuthId) {
+    console.log(userAuthId);
+    if (
+      typeof userAuthId !== "undefined" &&
+      mainOffer.user._id.toString() !== userAuthId
+    ) {
       await User.findOneAndUpdate(
-        { _id: ObjectId(userAuthId), "recentlyWatched.id": ObjectId(offerId) },
+        { _id: userAuthId, "recentlyWatched.id": ObjectId(offerId) },
         { $pull: { recentlyWatched: { id: ObjectId(offerId) } } }
       );
 
       await User.findOneAndUpdate(
-        { _id: ObjectId(userAuthId) },
+        { _id: userAuthId },
         {
           $push: {
             recentlyWatched: {
@@ -76,9 +79,9 @@ const fetchOfferAndSimillar = async (req, res) => {
       );
     }
 
-    const user = await User.findById(ObjectId(mainOffer.user._id));
+    const user = await User.findById(mainOffer.user._id);
     const offersUser = await Offer.find({
-      _id: { $ne: ObjectId(offerId) },
+      _id: { $ne: offerId },
       user: mainOffer.user._id,
       expirationDate: { $gt: currentDate },
     })
@@ -86,8 +89,8 @@ const fetchOfferAndSimillar = async (req, res) => {
       .populate("user");
 
     let offersCategories = await Offer.find({
-      user: { $ne: ObjectId(mainOffer.user._id) },
-      _id: { $ne: ObjectId(offerId) },
+      user: { $ne: mainOffer.user._id },
+      _id: { $ne: offerId },
       categories: { $in: mainOffer.categories },
       expirationDate: { $gt: currentDate },
     })

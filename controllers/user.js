@@ -21,7 +21,6 @@ const getUser = async (req, res) => {
   try {
     const { id } = req.user;
     let user = await User.findById(id);
-    user.password = "";
     res.status(200).json({ data: user });
   } catch (err) {
     console.log(err);
