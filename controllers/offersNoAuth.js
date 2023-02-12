@@ -50,15 +50,15 @@ const fetchOfferAndSimillar = async (req, res) => {
   try {
     const limit = 3;
     const { offerId, userAuthId } = req.params;
-
+    console.log(offerId, userAuthId);
     const mainOffer = await Offer.findOne({
-      _id: offerId,
+      _id: ObjectId(offerId),
       expirationDate: { $gt: currentDate },
     }).populate("user");
 
     if (userAuthId && mainOffer.user._id.toString() !== userAuthId) {
       await User.findOneAndUpdate(
-        { _id: userAuthId, "recentlyWatched.id": ObjectId(offerId) },
+        { _id: ObjectId(userAuthId), "recentlyWatched.id": ObjectId(offerId) },
         { $pull: { recentlyWatched: { id: ObjectId(offerId) } } }
       );
 
