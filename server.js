@@ -23,7 +23,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(express.json());
-// app.use(express.static(__dirname));
+
 app.use(
   "/public/offers",
   express.static(path.join(__dirname, "/public/offers"))

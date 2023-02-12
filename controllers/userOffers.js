@@ -141,6 +141,7 @@ const addOffer = async (req, res) => {
     });
     res.status(201).json({ data: "Offer added" });
   } catch (err) {
+    console.log(err);
     res.status(500).json({ err: INTERNAL_ERROR });
   }
 };
