@@ -10,7 +10,7 @@ const path = require("path");
 
 const imageResize = async (buffer, name, req) => {
   const host = req.protocol + "://" + req.get("host");
-  const directory = path.join(host, "/public/offers", name);
+  const directory = path.join(__dirname, "/public/offers", name);
   console.log(directory);
   if (!fs.existsSync(directory)) {
     fs.mkdirSync(directory, { recursive: true });
@@ -191,7 +191,7 @@ const updateOffer = async (req, res) => {
     const newImagesNotMain = req.files["image-offer"];
     if (newImagesNotMain) {
       newImagesNotMain.forEach((image) =>
-        imageResize(image.buffer, `${unique}-${image.originalname}`)
+        imageResize(image.buffer, `${unique}-${image.originalname}`, req)
       );
     }
 
@@ -214,7 +214,7 @@ const updateOffer = async (req, res) => {
         if (isNaN(itemIndex)) return;
         else if (itemIndex === 0) {
           const imagePath = unique + "-" + mainImageNew.originalname;
-          imageResize(mainImageNew.buffer, imagePath);
+          imageResize(mainImageNew.buffer, imagePath, req);
           mainImageNew = imageUrl + `${unique}-${mainImageNew.originalname}`;
         } else if (!indexesImagesChanged.includes(0)) {
           imagesCurrent[itemIndex - 1] = linksForNewImages[i];
