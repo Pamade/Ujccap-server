@@ -8,7 +8,7 @@ const unique = new Date().getTime();
 const fs = require("fs");
 const path = require("path");
 
-const imageResize = async (buffer, name) => {
+const imageResize = async (buffer, name, req) => {
   const host = req.protocol + "://" + req.get("host");
   const directory = path.join(host, "/public/offers", name);
   console.log(directory);
@@ -113,11 +113,11 @@ const addOffer = async (req, res) => {
       req.body;
 
     if (mainImage) {
-      imageResize(mainImage.buffer, uniqueNameMain);
+      imageResize(mainImage.buffer, uniqueNameMain, req);
     }
     if (imagesNotMain) {
       imagesNotMain.map((image) => {
-        imageResize(image.buffer, `${unique}-${image.originalname}`);
+        imageResize(image.buffer, `${unique}-${image.originalname}`, req);
       });
     }
 
