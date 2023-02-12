@@ -63,7 +63,7 @@ const fetchOfferAndSimillar = async (req, res) => {
       );
 
       await User.findOneAndUpdate(
-        { _id: userAuthId },
+        { _id: ObjectId(userAuthId) },
         {
           $push: {
             recentlyWatched: {
@@ -78,7 +78,7 @@ const fetchOfferAndSimillar = async (req, res) => {
 
     const user = await User.findById(ObjectId(mainOffer.user._id));
     const offersUser = await Offer.find({
-      _id: { $ne: offerId },
+      _id: { $ne: ObjectId(offerId) },
       user: mainOffer.user._id,
       expirationDate: { $gt: currentDate },
     })
@@ -87,7 +87,7 @@ const fetchOfferAndSimillar = async (req, res) => {
 
     let offersCategories = await Offer.find({
       user: { $ne: ObjectId(mainOffer.user._id) },
-      _id: { $ne: offerId },
+      _id: { $ne: ObjectId(offerId) },
       categories: { $in: mainOffer.categories },
       expirationDate: { $gt: currentDate },
     })
