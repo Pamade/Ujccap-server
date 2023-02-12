@@ -8,7 +8,7 @@ const unique = new Date().getTime();
 const fs = require("fs");
 const imageResize = async (buffer, path) => {
   const directory = "/public/offers";
-
+  console.log(buffer, path);
   if (!fs.existsSync(directory)) {
     fs.mkdirSync(directory, { recursive: true });
   }
