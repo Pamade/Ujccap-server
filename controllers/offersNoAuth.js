@@ -76,7 +76,7 @@ const fetchOfferAndSimillar = async (req, res) => {
       );
     }
 
-    const user = await User.findById(mainOffer.user._id);
+    const user = await User.findById(ObjectId(mainOffer.user._id));
     const offersUser = await Offer.find({
       _id: { $ne: offerId },
       user: mainOffer.user._id,
@@ -86,7 +86,7 @@ const fetchOfferAndSimillar = async (req, res) => {
       .populate("user");
 
     let offersCategories = await Offer.find({
-      user: { $ne: mainOffer.user._id },
+      user: { $ne: ObjectId(mainOffer.user._id) },
       _id: { $ne: offerId },
       categories: { $in: mainOffer.categories },
       expirationDate: { $gt: currentDate },
