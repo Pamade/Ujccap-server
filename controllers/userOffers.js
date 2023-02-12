@@ -8,10 +8,9 @@ const unique = new Date().getTime();
 const fs = require("fs");
 const path = require("path");
 
-const imageResize = async (buffer, name, req) => {
-  const host = req.protocol + "://" + req.get("host");
-  const directory = path.join(__dirname, "/public/offers", name);
-  console.log(directory);
+const imageResize = async (buffer, name) => {
+  const directory = path.join("./public/offers", name);
+
   if (!fs.existsSync(directory)) {
     fs.mkdirSync(directory, { recursive: true });
   }
@@ -113,11 +112,11 @@ const addOffer = async (req, res) => {
       req.body;
 
     if (mainImage) {
-      imageResize(mainImage.buffer, uniqueNameMain, req);
+      imageResize(mainImage.buffer, uniqueNameMain);
     }
     if (imagesNotMain) {
       imagesNotMain.map((image) => {
-        imageResize(image.buffer, `${unique}-${image.originalname}`, req);
+        imageResize(image.buffer, `${unique}-${image.originalname}`);
       });
     }
 
@@ -191,7 +190,7 @@ const updateOffer = async (req, res) => {
     const newImagesNotMain = req.files["image-offer"];
     if (newImagesNotMain) {
       newImagesNotMain.forEach((image) =>
-        imageResize(image.buffer, `${unique}-${image.originalname}`, req)
+        imageResize(image.buffer, `${unique}-${image.originalname}`)
       );
     }
 
@@ -214,7 +213,7 @@ const updateOffer = async (req, res) => {
         if (isNaN(itemIndex)) return;
         else if (itemIndex === 0) {
           const imagePath = unique + "-" + mainImageNew.originalname;
-          imageResize(mainImageNew.buffer, imagePath, req);
+          imageResize(mainImageNew.buffer, imagePath);
           mainImageNew = imageUrl + `${unique}-${mainImageNew.originalname}`;
         } else if (!indexesImagesChanged.includes(0)) {
           imagesCurrent[itemIndex - 1] = linksForNewImages[i];
