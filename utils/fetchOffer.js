@@ -16,6 +16,11 @@ const fetch = async (req, res, allowQueryFilters, data) => {
   } = req.query;
 
   let queryObject = {};
+  const defaultImgURL =
+    req.protocol +
+    "://" +
+    req.get("host") +
+    "/public/offers/placeholder_offer.png";
   if (name) {
     queryObject.name = { $regex: name, $options: "i" };
   }
@@ -38,7 +43,7 @@ const fetch = async (req, res, allowQueryFilters, data) => {
   }
   if (hasImage) {
     queryObject.mainImage = {
-      $ne: "http://localhost:5001/public/offers/placeholder_offer.png",
+      $ne: defaultImgURL,
     };
   }
   console.log(queryObject);

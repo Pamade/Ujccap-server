@@ -2,7 +2,9 @@ const { User } = require("../models/user");
 const setOpinions = async (req, res) => {
   try {
     const { userId, type } = req.params;
-
+    if (!userId) {
+      return res.status(401).json({ err: "You have to be logged in" });
+    }
     if (userId === req.user.id) {
       return res.status(401).json({ err: "You cant reveiew yourself" });
     }
