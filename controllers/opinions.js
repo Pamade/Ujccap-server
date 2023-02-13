@@ -1,4 +1,5 @@
 const { User } = require("../models/user");
+const { INTERNAL_ERROR } = require("../utils/errors");
 const setOpinions = async (req, res) => {
   try {
     const { userId, type } = req.params;
@@ -22,22 +23,11 @@ const setOpinions = async (req, res) => {
     user.opinionsFromUsers.opinionsUserIds.push(req.user.id);
     await user.save();
 
-    res.status(200).json({ x: "[" });
+    res.status(200).json({ data: "Review added" });
   } catch (err) {
     console.log(err);
-    res.status(500).json({ x: "[" });
+    res.status(500).json({ err: INTERNAL_ERROR });
   }
 };
-
-// const getOpinions = async (req, res, next) => {
-//   try {
-//     const { userId } = req.params;
-//     const user = await User.findOne({ _id: userId });
-
-//     // console.log(rest);
-//     res.status(200).json(user);
-//     next();
-//   } catch (err) {}
-// };
 
 module.exports = { setOpinions };
