@@ -7,9 +7,7 @@ const setOpinions = async (req, res) => {
     if (userId === loggedUserId) {
       return res.status(401).json({ err: "You cant reveiew yourself" });
     }
-    if (!loggedUserId) {
-      return res.status(401).json({ err: "You have to be logged in" });
-    }
+
     const user = await User.findOne({ _id: userId });
     const isReviewedByUser =
       user.opinionsFromUsers.opinionsUserIds.includes(loggedUserId);
