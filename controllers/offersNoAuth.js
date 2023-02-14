@@ -2,7 +2,6 @@ const { fetch, currentDate } = require("../utils/fetchOffer");
 const Offer = require("../models/offer");
 const { User } = require("../models/user");
 const { INTERNAL_ERROR } = require("../utils/errors");
-const { ObjectId } = require("mongoose").Types;
 
 const fetchOffersMainPage = async (req, res) => {
   try {
@@ -49,25 +48,27 @@ const fetchOfferAndSimillar = async (req, res) => {
   const cd = new Date().getTime();
   try {
     const limit = 3;
-    const { offerId, userAuthId } = req.params;
-
+    let { offerId, userAuthId } = req.params;
+    userAuthId = userAuthId.trim();
     const mainOffer = await Offer.findOne({
-      _id: ObjectId(offerId),
+      _id: offerId,
       expirationDate: { $gt: currentDate },
     }).populate("user");
-    console.log(userAuthId);
+
     if (userAuthId && mainOffer.user._id.toString() !== userAuthId) {
       await User.findOneAndUpdate(
-        { _id: userAuthId, "recentlyWatched.id": ObjectId(offerId) },
-        { $pull: { recentlyWatched: { id: ObjectId(offerId) } } }
+        {
+          _id: userAuthId,
+          "recentlyWatched.id": offerId,
+        },
+        { $pull: { recentlyWatched: { id: offerId } } }
       );
-
       await User.findOneAndUpdate(
         { _id: userAuthId },
         {
           $push: {
             recentlyWatched: {
-              id: ObjectId(offerId),
+              id: offerId,
               watchedTime: cd,
             },
           },
