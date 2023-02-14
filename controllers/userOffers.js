@@ -17,7 +17,7 @@ const imageResize = async (buffer, name) => {
   await sharp(buffer)
     .resize({
       fit: sharp.fit.cover,
-      width: 900,
+      width: 700,
     })
     .toFile(path.join(directory, name));
 };
