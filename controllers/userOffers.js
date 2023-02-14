@@ -19,6 +19,7 @@ const imageResize = async (buffer, name) => {
       fit: sharp.fit.cover,
       width: 700,
     })
+    .jpeg({ quality: 40 })
     .toFile(path.join(directory, name));
 };
 
@@ -84,8 +85,11 @@ const fetchOffer = async (req, res) => {
       userId: req.user.id,
     });
 
-    !data && res.status(404).json({ err: "Not found" });
-    res.status(200).json({ data });
+    if (!data) {
+      return res.status(404).json({ err: "Not found" });
+    } else {
+      return res.status(200).json({ data });
+    }
   } catch (err) {
     res.status(500).json({ err: INTERNAL_ERROR });
   }

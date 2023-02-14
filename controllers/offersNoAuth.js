@@ -54,7 +54,7 @@ const fetchOfferAndSimillar = async (req, res) => {
       _id: offerId,
       expirationDate: { $gt: currentDate },
     }).populate("user");
-    console.log(userAuthId);
+
     if (
       userAuthId !== "undefined" &&
       userAuthId &&
