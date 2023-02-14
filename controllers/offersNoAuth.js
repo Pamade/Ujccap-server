@@ -52,7 +52,7 @@ const fetchOfferAndSimillar = async (req, res) => {
     const { offerId, userAuthId } = req.params;
 
     const mainOffer = await Offer.findOne({
-      _id: offerId,
+      _id: ObjectId(offerId),
       expirationDate: { $gt: currentDate },
     }).populate("user");
     console.log(userAuthId);
