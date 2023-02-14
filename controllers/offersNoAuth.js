@@ -54,8 +54,12 @@ const fetchOfferAndSimillar = async (req, res) => {
       _id: offerId,
       expirationDate: { $gt: currentDate },
     }).populate("user");
-
-    if (userAuthId && mainOffer.user._id.toString() !== userAuthId) {
+    console.log(userAuthId);
+    if (
+      userAuthId !== "undefined" &&
+      userAuthId &&
+      mainOffer.user._id.toString() !== userAuthId
+    ) {
       await User.findOneAndUpdate(
         {
           _id: userAuthId,
