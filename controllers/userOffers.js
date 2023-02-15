@@ -264,8 +264,9 @@ const deleteOffer = async (req, res, next) => {
 const fetchRecentlyWatched = async (req, res) => {
   try {
     const limit = 3;
-    const { userId } = req.params;
-    console.log(userId);
+    let { userId } = req.params;
+    let val = undefined;
+    userId = userId.trim();
     let recentlyWatchedDoc = await User.findOne({
       _id: userId,
       expirationDate: { $gt: currentDate },
@@ -284,14 +285,18 @@ const fetchRecentlyWatched = async (req, res) => {
 
     offers = offers.reverse();
     const offersRecent = recentlyWatched.map((recently) => {
+      console.log(recently);
       const offerWithId = offers.find(
         (off) => off._id.toString() === recently.id.toString()
       );
 
-      const val = {
-        ...offerWithId._doc,
-        recentlyWatchedByUser: recently.watchedTime,
-      };
+      if (offerWithId) {
+        val = {
+          ...offerWithId._doc,
+          recentlyWatchedByUser: recently.watchedTime,
+        };
+      }
+
       return val;
     });
 
