@@ -265,7 +265,6 @@ const fetchRecentlyWatched = async (req, res) => {
   try {
     const limit = 3;
     let { userId } = req.params;
-    let val = undefined;
     userId = userId.trim();
     let recentlyWatchedDoc = await User.findOne({
       _id: userId,
@@ -285,7 +284,6 @@ const fetchRecentlyWatched = async (req, res) => {
 
     offers = offers.reverse();
     const offersRecent = recentlyWatched.map((recently) => {
-      console.log(recently);
       const offerWithId = offers.find(
         (off) => off._id.toString() === recently.id.toString()
       );

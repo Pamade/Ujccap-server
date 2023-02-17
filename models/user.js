@@ -5,7 +5,11 @@ const SellerSchema = new mongoose.Schema({
   name: { type: String, maxLength: 35 },
   surname: { type: String, maxLength: 35 },
   address: { type: String, maxLength: 35 },
-  phoneNumber: { type: Number, maxLength: 35 },
+  phoneNumber: {
+    type: Number,
+    maxLength: 35,
+    unique: true,
+  },
   city: { type: String, maxLength: 35 },
   postCode: { type: String, maxLength: 35 },
 });

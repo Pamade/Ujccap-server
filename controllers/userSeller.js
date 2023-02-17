@@ -6,6 +6,14 @@ const { INTERNAL_ERROR } = require("../utils/errors");
 const createSeller = async (req, res, next) => {
   try {
     let user = await User.findById(req.user.id);
+    const existingPhoneNumber = await User.findOne({
+      "seller.phoneNumber": req.body.phoneNumber,
+    });
+    if (existingPhoneNumber) {
+      return res
+        .status(409)
+        .json({ err: "This phone number is already registered" });
+    }
     user.seller = req.body;
     await user.save();
     return res
@@ -23,6 +31,14 @@ const updateSeller = async (req, res, next) => {
 
     const sellerOld = _.omit(seller, ["_id"]);
     const sellerNew = _.omit(req.body, ["_id"]);
+    const existingPhoneNumber = await User.findOne({
+      "seller.phoneNumber": req.body.phoneNumber,
+    });
+    if (existingPhoneNumber) {
+      return res
+        .status(409)
+        .json({ err: "This phone number is already registered" });
+    }
 
     for (const val in sellerNew) {
       if (!sellerNew[val]) {
